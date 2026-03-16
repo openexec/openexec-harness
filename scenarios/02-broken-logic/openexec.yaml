@@ -1,0 +1,7 @@
+project:
+  name: 02-broken-logic
+  type: fullstack-webapp
+
+quality:
+  gates:
+    - lint

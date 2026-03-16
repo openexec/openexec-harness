@@ -1,0 +1,7 @@
+project:
+  name: 01-smoke-web
+  type: fullstack-webapp
+
+quality:
+  gates:
+    - lint

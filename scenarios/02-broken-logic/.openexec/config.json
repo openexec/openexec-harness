@@ -1,0 +1,19 @@
+{
+  "name": "02-broken-logic",
+  "project_dir": "/Users/perttu/study/siivous/orchestrator/projects/openexec-harness/scenarios/02-broken-logic",
+  "engram_store": ".openexec/engram",
+  "git_enabled": true,
+  "base_branch": "main",
+  "execution": {
+    "planner_model": "sonnet",
+    "executor_model": "sonnet",
+    "review_enabled": false,
+    "reviewer_model": "opus",
+    "max_iterations": 10,
+    "port": 8080,
+    "parallel_enabled": true,
+    "worker_count": 4,
+    "timeout_seconds": 600,
+    "exec_mode": "danger-full-access"
+  }
+}

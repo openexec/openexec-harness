@@ -1,0 +1,32 @@
+2026/03/16 16:34:16 [StateStore] Initialized: path=.openexec/openexec.db, schema=v1, async_queue_size=1000
+2026/03/16 16:34:16 [Server] Runner: model=sonnet command=/opt/homebrew/bin/claude args=[--output-format stream-json --verbose --max-turns 50]
+[MIGRATION] Bootstrapping from JSON files into SQLite (one-time only)
+[MIGRATION] Importing stories/goals from /Users/perttu/study/siivous/orchestrator/projects/openexec-harness/scenarios/02-broken-logic/.openexec/stories.json
+2026/03/16 16:34:16 [Bootstrap] parsed stories.json: 2 goals, 4 stories
+[MIGRATION] Imported 2 goals
+2026/03/16 16:34:16 [Bootstrap] creating 4 stories and 4 tasks
+[MIGRATION] Imported 4 stories
+[MIGRATION] Bootstrap complete. SQLite is now the canonical source.
+2026/03/16 16:34:16 [Server] DCP disabled: using Pipeline/Manager only
+2026/03/16 16:34:16 [Watchdog] Started monitoring with stall threshold 5m0s
+2026/03/16 16:34:16 [Server] Feature flags enabled: UnifiedReads
+2026/03/16 16:34:16 [Server] Feature flags disabled: DCP, LegacyFWU
+2026/03/16 16:34:16 [Server] ⚠ Warning: failed to initialize OTel: failed to create resource: conflicting Schema URL: https://opentelemetry.io/schemas/1.40.0 and https://opentelemetry.io/schemas/1.24.0
+[PREFLIGHT] ✓ runner_available: runner 'claude' available
+[PREFLIGHT] ✓ runner_noop: runner responded to noop check
+[PREFLIGHT] ✓ knowledge_db: knowledge store initialized
+[PREFLIGHT] ✓ audit_db: audit logger active
+2026/03/16 16:34:16 [Server] Unified OpenExec API listening on :8080
+2026/03/16 16:34:18 [API] GET /metrics 404 (27.5µs)
+2026/03/16 16:34:21 [API] GET /api/ready 200 (6.208µs)
+2026/03/16 16:34:21 [API] GET /api/ready 200 (6.375µs)
+2026/03/16 16:34:21 [API] POST /api/v1/runs:plan 200 (379.75µs)
+2026/03/16 16:34:21 [API] POST /api/v1/runs:execute 202 (27.75µs)
+2026/03/16 16:34:21 [Scheduler] Starting execution of 4 pending tasks (parallel=0)
+2026/03/16 16:34:21 [Worker 0] Executing T-US-001-001: Study calc.py and test_calc.py
+2026/03/16 16:34:21 [Manager] Pipeline T-US-001-001: running
+2026/03/16 16:34:21 [Manager] Event T-US-001-001 [stage_start]: stage=gather_context
+2026/03/16 16:34:21 [Manager] Event T-US-001-001 [stage_complete]: stage=gather_context
+2026/03/16 16:34:21 [Manager] Event T-US-001-001 [stage_start]: stage=implement
+2026/03/16 16:34:26 [API] GET /api/v1/runs 200 (238.625µs)
+2026/03/16 16:34:28 [API] GET /metrics 404 (12.792µs)

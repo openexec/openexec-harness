@@ -1,0 +1,4 @@
+# OpenExec Managed Block
+.openexec/logs/
+.openexec/data/
+.openexec/engram/cache/
