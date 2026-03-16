@@ -9,11 +9,29 @@ OPENEXEC_DIR="$(pwd)/../openexec"
 OPENEXEC_BIN="$OPENEXEC_DIR/bin/openexec"
 SCENARIOS_DIR="scenarios"
 
+# Default configuration (can be overridden by flags)
+PLANNER_MODEL="sonnet"
+EXECUTOR_MODEL="sonnet"
+REVIEWER_MODEL="opus"
+
+# Parse arguments
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --build) BUILD=true ;;
+        --planner) PLANNER_MODEL="$2"; shift ;;
+        --executor) EXECUTOR_MODEL="$2"; shift ;;
+        --reviewer) REVIEWER_MODEL="$2"; shift ;;
+        --planner-cli) export OPENEXEC_PLANNER_CLI="$2"; shift ;;
+        --executor-cli) export OPENEXEC_EXECUTOR_CLI="$2"; shift ;;
+        *) SCENARIO_ARG="$1" ;;
+    esac
+    shift
+done
+
 # 1. Validate environment and build if necessary
-if [ "$1" == "--build" ]; then
+if [ "$BUILD" == true ]; then
     echo "🔨 Building OpenExec..."
     (cd "$OPENEXEC_DIR" && go build -o bin/openexec ./cmd/openexec)
-    shift
 fi
 
 if [ ! -f "$OPENEXEC_BIN" ]; then
@@ -53,8 +71,8 @@ function run_scenario() {
     rm -rf .openexec
     
     # 2. Initialize project (non-interactive)
-    echo "📌 Initializing..."
-    $OPENEXEC_BIN init -y
+    echo "📌 Initializing with models: Planner=$PLANNER_MODEL, Executor=$EXECUTOR_MODEL, Reviewer=$REVIEWER_MODEL..."
+    $OPENEXEC_BIN init -y --planner "$PLANNER_MODEL" --executor "$EXECUTOR_MODEL" --reviewer "$REVIEWER_MODEL"
     
     # 3. Plan the intent (skip validation for micro-scenarios)
     echo "📌 Planning..."
@@ -82,11 +100,11 @@ function run_scenario() {
 }
 
 # Run specific scenario or all
-if [ -z "$1" ]; then
+if [ -z "$SCENARIO_ARG" ]; then
     run_scenario "01-smoke-web"
     run_scenario "02-broken-logic"
 else
-    run_scenario "$1"
+    run_scenario "$SCENARIO_ARG"
 fi
 
 echo "🎉 All requested scenarios finished."
