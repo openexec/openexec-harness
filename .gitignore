@@ -1,0 +1,13 @@
+# Everything a harness run produces.
+#
+# A scenario is its inputs: INTENT.md, openexec.yaml, the source tree and the
+# tests that judge the outcome. Everything else under a scenario directory is
+# what one run on one machine happened to do — and run-harness.sh proves it, by
+# starting each scenario with `rm -rf .openexec` and building the state again
+# from scratch. Committing it meant every run produced a dirty tree that could
+# only be discarded.
+scenarios/*/.openexec/
+scenarios/*/claude-*.log
+
+# The harness registers itself with OpenExec when run from the repository root.
+.openexec/
