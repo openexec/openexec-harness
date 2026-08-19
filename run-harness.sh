@@ -14,6 +14,31 @@ PLANNER_MODEL="sonnet"
 EXECUTOR_MODEL="sonnet"
 REVIEWER_MODEL="opus"
 
+function wait_for_engine() {
+    local pid_file=".openexec/daemon.pid"
+    local attempts=75
+    local attempt
+    local engine_port=""
+
+    for ((attempt = 1; attempt <= attempts; attempt++)); do
+        if [ -r "$pid_file" ]; then
+            engine_port=$(cut -d: -f2 < "$pid_file")
+            if [[ "$engine_port" =~ ^[0-9]+$ ]] && curl --fail --silent --show-error --max-time 1 \
+                "http://127.0.0.1:${engine_port}/api/health" >/dev/null 2>&1; then
+                echo "   ✓ Engine ready on port $engine_port"
+                return 0
+            fi
+        fi
+        sleep 0.2
+    done
+
+    echo "❌ Engine did not become ready within 15 seconds."
+    if [ -r ".openexec/daemon.log" ]; then
+        tail -n 20 ".openexec/daemon.log"
+    fi
+    return 1
+}
+
 # Parse arguments
 while [[ "$#" -gt 0 ]]; do
     case $1 in
@@ -81,6 +106,7 @@ function run_scenario() {
     # 4. Start execution daemon
     echo "📌 Starting engine..."
     $OPENEXEC_BIN start --daemon
+    wait_for_engine
     
     # 5. Start execution
     echo "📌 Executing..."
